@@ -9,7 +9,6 @@ class SocialLoginCubit extends Cubit<SocialLoginStates> {
 
 
   static SocialLoginCubit get(context) => BlocProvider.of(context);
-
   void userLogin({
     required String email,
     required String password,
@@ -32,15 +31,4 @@ class SocialLoginCubit extends Cubit<SocialLoginStates> {
     suffix = Icon(isVisible ? Icons.visibility:Icons.visibility_off);
     emit(SocialChangePasswordVisibilityState());
   }
-
-  // void trying(context){
-  //   Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) =>
-  //           const RegisterScreen())
-  //
-  //   );
-  //   emit(NavigatedDone());
-  // }
 }
