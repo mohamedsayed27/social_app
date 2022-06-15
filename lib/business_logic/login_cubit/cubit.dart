@@ -1,8 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/login_cubit/states.dart';
 
-import '../../presentation/screens/register.dart';
 
 class SocialLoginCubit extends Cubit<SocialLoginStates> {
   SocialLoginCubit() : super(SocialLoginInitialState());
@@ -10,22 +10,21 @@ class SocialLoginCubit extends Cubit<SocialLoginStates> {
 
   static SocialLoginCubit get(context) => BlocProvider.of(context);
 
-  // void userLogin({
-  //   required String email,
-  //   required String password,
-  // }) {
-  //   emit(SocialLoginLoadingState());
-  //   DioHelper.postData(
-  //       url: login,
-  //       data: {'email': email, 'password': password})
-  //       .then((value) {
-  //     loginModel = SocialLoginModel.fromJson(value.data);
-  //     emit(SocialLoginSuccessState(loginModel!));
-  //   }).catchError((error) {
-  //     // print(error.toString());
-  //     emit(SocialLoginErrorState(error.toString()));
-  //   });
-  // }
+  void userLogin({
+    required String email,
+    required String password,
+  }) {
+    emit(SocialLoginLoadingState());
+    FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password
+    ).then((value) {
+      print(value.user!.email);
+      emit(SocialLoginSuccessState());
+    }).catchError((error){
+      emit(SocialLoginErrorState(error.toString()));
+    });
+  }
   Icon suffix = const Icon(Icons.visibility);
   bool isVisible = true;
   void passwordVisible(){
@@ -34,14 +33,14 @@ class SocialLoginCubit extends Cubit<SocialLoginStates> {
     emit(SocialChangePasswordVisibilityState());
   }
 
-  void trying(context){
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-            const RegisterScreen())
-
-    );
-    emit(NavigatedDone());
-  }
+  // void trying(context){
+  //   Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) =>
+  //           const RegisterScreen())
+  //
+  //   );
+  //   emit(NavigatedDone());
+  // }
 }

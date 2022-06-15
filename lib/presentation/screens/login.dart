@@ -86,11 +86,16 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(
                             height: 30,
                           ),
-                          specialButton(text: 'login',onPress: (){
-                            if(formKey.currentState!.validate()){
-                              SocialLoginCubit.get(context).trying(context);
-                            }
-                          }),
+                          specialButton(
+                              text: 'login',
+                              onPress: (){
+                                if(formKey.currentState!.validate()){
+                                  SocialLoginCubit.get(context).userLogin(
+                                      email: emailController.text,
+                                      password: passwordController.text);
+                                }
+                              }
+                          ),
                           const SizedBox(
                             height: 30,
                           ),
@@ -118,7 +123,7 @@ class LoginScreen extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const RegisterScreen()));
+                                               RegisterScreen()));
                                 },
                               ),
                             ],
@@ -129,7 +134,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-          listener: (context, state) {}),
+          listener: (context, state) {
+            if(state is SocialLoginErrorState){
+              showToast(msg:state.error.toString(),backColor: Colors.red, txtColor: Colors.white);
+            }
+          }),
     );
   }
 }
