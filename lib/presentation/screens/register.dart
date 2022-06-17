@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/register_cubit/RegStates.dart';
+import 'package:social_app/presentation/screens/social_layout.dart';
 
 import '../../business_logic/register_cubit/RegCubit.dart';
 import '../components.dart';
@@ -135,7 +136,8 @@ class RegisterScreen extends StatelessWidget {
                                                 email: emailController.text,
                                                 password: passwordController.text,
                                                 phone: phoneController.text,
-                                                name: userNameController.text);
+                                                name: userNameController.text
+                                            );
                                           }
                                         }
                                     ),
@@ -151,6 +153,10 @@ class RegisterScreen extends StatelessWidget {
                 listener: (context , state){
                   if(state is SocialRegisterErrorState){
                     showToast(msg:state.error.toString(),backColor: Colors.red, txtColor: Colors.white);
+                  }
+                  if(state is SocialCreateSuccessState){
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SocialLayout()), (route) => false);
+
                   }
                 }),
     );
