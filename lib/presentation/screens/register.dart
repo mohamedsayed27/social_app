@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/register_cubit/RegStates.dart';
@@ -124,18 +125,21 @@ class RegisterScreen extends StatelessWidget {
                                 const SizedBox(
                                   height: 30,
                                 ),
-                                specialButton(
-                                    text: 'Register',
-                                    onPress: (){
-                                      if(formKey.currentState!.validate()){
-                                        SocialRegisterCubit.get(context).userRegister(
-                                            email: emailController.text,
-                                            password: passwordController.text,
-                                            phone: phoneController.text,
-                                            name: userNameController.text);
-                                      }
-                                    }
-                                ),
+                                ConditionalBuilder(
+                                    condition: state is! SocialRegisterLoadingState,
+                                    builder: (context) => specialButton(
+                                        text: 'Register',
+                                        onPress: (){
+                                          if(formKey.currentState!.validate()){
+                                            SocialRegisterCubit.get(context).userRegister(
+                                                email: emailController.text,
+                                                password: passwordController.text,
+                                                phone: phoneController.text,
+                                                name: userNameController.text);
+                                          }
+                                        }
+                                    ),
+                                    fallback: (context) => const Center(child: CircularProgressIndicator(),))
                               ],
                             ),
                           ),

@@ -6,4 +6,9 @@ class SocialRegisterErrorState extends SocialRegisterStates{
   final String error;
   SocialRegisterErrorState(this.error);
 }
+class SocialCreateSuccessState extends SocialRegisterStates{}
+class SocialCreateErrorState extends SocialRegisterStates{
+  final String error;
+  SocialCreateErrorState(this.error);
+}
 class SocialChangePasswordVisibilityState extends SocialRegisterStates{}

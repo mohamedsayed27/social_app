@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:social_app/data/models/social_user_model.dart';
 import 'RegStates.dart';
 
 class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
@@ -19,11 +21,35 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
         email: email,
         password: password,
     ).then((value) {
-      print(value.user!.email);
-      print(value.user!.uid);
-      emit(SocialRegisterSuccessState());
+      userCreate(
+          email: email,
+          phone: phone,
+          name: name,
+          uId: value.user!.uid);
     }).catchError((error){
       emit(SocialRegisterErrorState(error.toString()));
+    });
+  }
+
+  void userCreate({
+    required String email,
+    required String phone ,
+    required String name,
+    required String uId,
+
+  }){
+
+    SocialUserModel model = SocialUserModel(
+      email: email,
+      phone: phone,
+      name: name,
+      userId: uId
+    );
+    FirebaseFirestore.instance.collection('users').doc(uId).set(model.toMap()).then((value) {
+      emit(SocialCreateSuccessState());
+    }).catchError((error){
+      emit(SocialCreateErrorState(error.toString()));
+
     });
   }
   Icon suffix = const Icon(Icons.visibility);
