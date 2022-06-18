@@ -20,8 +20,7 @@ class SocialLoginCubit extends Cubit<SocialLoginStates> {
         email: email,
         password: password
     ).then((value) {
-      emit(SocialLoginSuccessState());
-      CashHelper.saveData(key: 'token', value: value.user!.uid);
+      emit(SocialLoginSuccessState(value.user!.uid));
     }).catchError((error){
       emit(SocialLoginErrorState(error.toString()));
     });

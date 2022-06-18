@@ -48,7 +48,6 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
     FirebaseFirestore.instance.collection('users').doc(uId).set(model.toMap()).then((value) {
       emit(SocialCreateSuccessState());
     }).catchError((error){
-      print(error.toString());
       emit(SocialCreateErrorState(error.toString()));
 
     });

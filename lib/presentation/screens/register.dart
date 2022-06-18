@@ -155,7 +155,7 @@ class RegisterScreen extends StatelessWidget {
                     showToast(msg:state.error.toString(),backColor: Colors.red, txtColor: Colors.white);
                   }
                   if(state is SocialCreateSuccessState){
-                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => SocialLayout()), (route) => false);
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SocialLayout()), (route) => false);
 
                   }
                 }),

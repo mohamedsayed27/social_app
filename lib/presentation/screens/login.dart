@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/login_cubit/cubit.dart';
@@ -5,9 +6,10 @@ import 'package:social_app/business_logic/login_cubit/states.dart';
 import 'package:social_app/data/local/cash_helper.dart';
 import 'package:social_app/presentation/components.dart';
 import 'package:social_app/presentation/screens/register.dart';
+import 'package:social_app/presentation/screens/social_layout.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+class SocialLoginScreen extends StatelessWidget {
+  SocialLoginScreen({Key? key}) : super(key: key);
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -87,17 +89,22 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(
                             height: 30,
                           ),
-                          specialButton(
-                              text: 'login',
-                              onPress: (){
-                                if(formKey.currentState!.validate()){
-                                  SocialLoginCubit.get(context).userLogin(
-                                      email: emailController.text,
-                                      password: passwordController.text);
+                          ConditionalBuilder(
+                              condition: state is! SocialLoginLoadingState,
+                              builder: (context) {
+                                return specialButton(
+                                    text: 'login',
+                                    onPress: (){
+                                      if(formKey.currentState!.validate()){
+                                        SocialLoginCubit.get(context).userLogin(
+                                            email: emailController.text,
+                                            password: passwordController.text);
 
-                                }
-                              }
-                          ),
+                                      }
+                                    }
+                                );
+                              },
+                              fallback: (context)=> const Center(child: CircularProgressIndicator(),)),
                           const SizedBox(
                             height: 30,
                           ),
@@ -139,6 +146,11 @@ class LoginScreen extends StatelessWidget {
           listener: (context, state) {
             if(state is SocialLoginErrorState){
               showToast(msg:state.error.toString(),backColor: Colors.red, txtColor: Colors.white);
+            }
+            if(state is SocialLoginSuccessState){
+              CashHelper.saveData(key: 'uId', value: state.value).then((value) {
+                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const SocialLayout()), (route) => false);
+              });
             }
           }),
     );

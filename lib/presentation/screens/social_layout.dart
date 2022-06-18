@@ -5,6 +5,12 @@ class SocialLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return  Scaffold(
+      appBar: AppBar(),
+      body: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: const [Text('WELCOME TO SOCIAL APP LAYOUT')],),),
+    );
   }
 }

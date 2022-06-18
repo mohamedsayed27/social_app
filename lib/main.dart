@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:social_app/bloc_observer.dart';
 import 'package:social_app/data/local/cash_helper.dart';
 import 'package:social_app/presentation/screens/login.dart';
+import 'package:social_app/presentation/screens/social_layout.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -13,13 +14,21 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  late Widget startWidget;
+  var userId =  CashHelper.getData(key: 'uId');
+  if(userId != null){
+    startWidget = const SocialLayout();
+  } else{
+    startWidget = SocialLoginScreen();
+  }
 
-  runApp(const MyApp());
+  runApp( MyApp(startWidget: startWidget,));
+
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+   MyApp({Key? key, required this.startWidget}) : super(key: key);
+   final Widget startWidget;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginScreen(),
+      home: startWidget,
     );
   }
 }
