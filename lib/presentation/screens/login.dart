@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/login_cubit/cubit.dart';
 import 'package:social_app/business_logic/login_cubit/states.dart';
+import 'package:social_app/data/local/cash_helper.dart';
 import 'package:social_app/presentation/components.dart';
 import 'package:social_app/presentation/screens/register.dart';
 
@@ -93,6 +94,7 @@ class LoginScreen extends StatelessWidget {
                                   SocialLoginCubit.get(context).userLogin(
                                       email: emailController.text,
                                       password: passwordController.text);
+
                                 }
                               }
                           ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/login_cubit/states.dart';
 
+import '../../data/local/cash_helper.dart';
+
 
 class SocialLoginCubit extends Cubit<SocialLoginStates> {
   SocialLoginCubit() : super(SocialLoginInitialState());
@@ -19,6 +21,7 @@ class SocialLoginCubit extends Cubit<SocialLoginStates> {
         password: password
     ).then((value) {
       emit(SocialLoginSuccessState());
+      CashHelper.saveData(key: 'token', value: value.user!.uid);
     }).catchError((error){
       emit(SocialLoginErrorState(error.toString()));
     });
