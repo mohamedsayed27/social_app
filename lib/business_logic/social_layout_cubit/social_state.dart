@@ -6,4 +6,5 @@ class GetUserErrorState extends SocialState{
   final String error;
   GetUserErrorState(this.error);
 }
+class ChangeBottomNavBarState extends SocialState{}
 
