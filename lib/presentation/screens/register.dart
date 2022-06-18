@@ -1,5 +1,6 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/register_cubit/RegStates.dart';
 import 'package:social_app/presentation/screens/social_layout.dart';
@@ -22,6 +23,10 @@ class RegisterScreen extends StatelessWidget {
                 builder: (context , state){
                   return Scaffold(
                     appBar: AppBar(
+                      systemOverlayStyle: SystemUiOverlayStyle(
+                        statusBarColor: Colors.white,
+                        statusBarIconBrightness: Brightness.dark
+                      ),
                       elevation: 0,
                       backgroundColor: Colors.white,
                       iconTheme: const IconThemeData(color: Colors.black),

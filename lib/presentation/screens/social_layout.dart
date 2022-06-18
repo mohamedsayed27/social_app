@@ -15,7 +15,12 @@ class SocialLayout extends StatelessWidget {
           body: Center(child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: const [Text('WELCOME TO SOCIAL APP LAYOUT')],),),
+            children:
+            [
+              Text('WELCOME TO SOCIAL APP LAYOUT')
+            ],
+          ),
+          ),
         ),
         listener: (context , state){}
     );
