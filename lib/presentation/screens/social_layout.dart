@@ -13,6 +13,7 @@ class SocialLayout extends StatelessWidget {
         builder: (context , state) {
           var cubit = SocialCubit.get(context);
           return Scaffold(
+            backgroundColor: Colors.white,
             appBar: AppBar(
               elevation: 0,
               backgroundColor: Colors.white,

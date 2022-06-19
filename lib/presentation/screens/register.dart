@@ -23,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
                 builder: (context , state){
                   return Scaffold(
                     appBar: AppBar(
-                      systemOverlayStyle: SystemUiOverlayStyle(
+                      systemOverlayStyle: const SystemUiOverlayStyle(
                         statusBarColor: Colors.white,
                         statusBarIconBrightness: Brightness.dark
                       ),
