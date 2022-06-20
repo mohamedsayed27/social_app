@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:social_app/presentation/style/icon_broken.dart';
 
 class FeedsScreen extends StatelessWidget {
   const FeedsScreen({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class FeedsScreen extends StatelessWidget {
           ),
           Card(
             clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 10.0,
+            elevation: 5.0,
             margin: const EdgeInsets.all(8.0),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -66,13 +67,33 @@ class FeedsScreen extends StatelessWidget {
                       color: Colors.grey.shade400,
                     ),
                   ),
-                  Text(
-                      'A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs. This is because paragraphs show a reader where the subdivisions of an essay begin and end, and thus help the reader see the organization of the essay and grasp its main points.' ,
+                  const Text(
+                      'A paragraph is a series of sentences that are organized and coherent, and are all related to a single topic. Almost every piece of writing you do that is longer than a few sentences should be organized into paragraphs. ' ,
                       style: TextStyle(height: 1.3,fontSize: 14,),
                     maxLines: 7,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Wrap(
+                      children: [
+                         Container(
+                            height: 20.0,
+                            child: MaterialButton(
+                                onPressed: (){},
+                                minWidth: 1.0,
+                                padding: EdgeInsets.zero,
+                                child: Text(
+                                  '#Flutter',
+                                  style: Theme.of(context).textTheme.caption!.copyWith(
+                                    color: Colors.blue,
+                                  ),
+                                ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
                   Container(
                     height: 170,
                     width: double.infinity,
@@ -85,6 +106,78 @@ class FeedsScreen extends StatelessWidget {
                       )
                     ),
                   ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: InkWell(
+                            onTap: (){},
+                            child: Padding(
+                                padding: EdgeInsets.only(top: 5.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(IconBroken.Heart,color: Colors.red,),
+                                  SizedBox(width: 5,),
+                                  Text('120'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: (){},
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 5.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(IconBroken.Message,color: Colors.amber,),
+                                SizedBox(width:5.0),
+                                Text('120 Comment'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding:  EdgeInsets.symmetric(vertical: 10),
+                    child: Container(
+                      width: double.infinity,
+                      height: 1.0,
+                      color: Colors.grey.shade400,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      const CircleAvatar(
+                        backgroundImage: NetworkImage('https://as1.ftcdn.net/v2/jpg/03/02/78/26/1000_F_302782694_VftvTDVoDT6kYW3lXTqvp8bmH3inmpT8.jpg'),
+                        radius: 20,
+                      ),
+                      SizedBox(width: 10.0,),
+                      Text('Write a comment .....'),
+                      Spacer(),
+                      InkWell(
+                        onTap: (){},
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 5.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text('like'),
+                              SizedBox(width: 5,),
+                              Icon(IconBroken.Heart,color: Colors.red,),
+
+
+                            ],
+                          ),
+                        ),
+                      )
+
+                    ],
+                  )
                 ],
               ),
             ),
@@ -95,3 +188,5 @@ class FeedsScreen extends StatelessWidget {
     );
   }
 }
+
+
