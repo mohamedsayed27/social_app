@@ -14,7 +14,7 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
     required String email,
     required String password,
     required String phone ,
-    required String name
+    required String name,
   }) {
     emit(SocialRegisterLoadingState());
     FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -36,14 +36,15 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
     required String phone ,
     required String name,
     required String uId,
-
   }){
 
     SocialUserModel model = SocialUserModel(
       email: email,
       phone: phone,
       name: name,
-      userId: uId
+      userId: uId,
+      bio: 'Write your bio',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu69uuuW9aKsFfpBytgRFwFlVXSYyKzT3780oydIgMrUmyp5An_5AxA3P5RARIHh6jb3A&usqp=CAU'
     );
     FirebaseFirestore.instance.collection('users').doc(uId).set(model.toMap()).then((value) {
       emit(SocialCreateSuccessState());

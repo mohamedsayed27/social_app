@@ -7,4 +7,5 @@ class GetUserErrorState extends SocialState{
   GetUserErrorState(this.error);
 }
 class ChangeBottomNavBarState extends SocialState{}
+class AddPostScreenState extends SocialState{}
 

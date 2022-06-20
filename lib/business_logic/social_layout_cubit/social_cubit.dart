@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/social_layout_cubit/social_state.dart';
 import 'package:social_app/constants.dart';
+import 'package:social_app/presentation/screens/add_post.dart';
 import 'package:social_app/presentation/screens/chats.dart';
 import 'package:social_app/presentation/screens/feeds.dart';
 import 'package:social_app/presentation/screens/settings.dart';
@@ -32,6 +33,7 @@ class SocialCubit extends Cubit<SocialState> {
   List<Widget> screens =[
     const FeedsScreen(),
     const ChatsScreen(),
+    const AddPostScreen(),
     const UsersScreen(),
     const SettingsScreen(),
 
@@ -40,11 +42,18 @@ class SocialCubit extends Cubit<SocialState> {
   List<Widget> appBarTitles = [
     const Text('Home'),
     const Text('Chats'),
+    const Text('Add post'),
     const Text('Users'),
     const Text('Settings')
   ];
-   void changeBottomNav(int index){
-     currentIndex = index;
-     emit(ChangeBottomNavBarState());
+   void changeBottomNav(int index,context){
+
+     if(index == 2){
+       emit(AddPostScreenState());
+     }else{
+       currentIndex = index;
+       emit(ChangeBottomNavBarState());
+     }
+
    }
 }
