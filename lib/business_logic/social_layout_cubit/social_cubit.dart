@@ -9,11 +9,13 @@ import 'package:social_app/presentation/screens/feeds.dart';
 import 'package:social_app/presentation/screens/settings.dart';
 import 'package:social_app/presentation/screens/users.dart';
 
+import '../../data/models/social_user_model.dart';
+
 class SocialCubit extends Cubit<SocialState> {
   SocialCubit() : super(SocialInitial());
   static SocialCubit get(context) => BlocProvider.of(context);
 
-
+    SocialUserModel? socialUserModel;
   void getUsers(){
     emit(GetUserLoadingState());
 
@@ -22,7 +24,7 @@ class SocialCubit extends Cubit<SocialState> {
         .doc(userId)
         .get()
         .then((value) {
-          print(value.data());
+          socialUserModel = SocialUserModel.fromJson(value.data()!);
       emit(GetUserSuccessState());
     }).catchError((error) {
       emit(GetUserErrorState(error));

@@ -44,7 +44,8 @@ class SocialRegisterCubit extends Cubit<SocialRegisterStates> {
       name: name,
       userId: uId,
       bio: 'Write your bio',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu69uuuW9aKsFfpBytgRFwFlVXSYyKzT3780oydIgMrUmyp5An_5AxA3P5RARIHh6jb3A&usqp=CAU'
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu69uuuW9aKsFfpBytgRFwFlVXSYyKzT3780oydIgMrUmyp5An_5AxA3P5RARIHh6jb3A&usqp=CAU',
+      cover: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkA1ho1JPYA1QA5qGhIMSdg--sZCWjLkRo45rUQaB_hewV6Q6sO-O-_4uSzKvLZiBdT4g&usqp=CAU'
     );
     FirebaseFirestore.instance.collection('users').doc(uId).set(model.toMap()).then((value) {
       emit(SocialCreateSuccessState());

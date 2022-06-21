@@ -10,20 +10,25 @@ class FeedsScreen extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       child: Column(
         children: [
-          Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            elevation: 10.0,
-            margin: const EdgeInsets.only(right: 8.0,left: 8.0,bottom: 8.0,top: 0),
-            child: Stack(
-              alignment: Alignment.bottomRight,
-              children: const [
-                Image(
-                    image: NetworkImage('https://as1.ftcdn.net/v2/jpg/03/48/07/84/1000_F_348078448_YLQP7PyisReZZzuU6snFFE4C4TxSNkel.jpg')),
-                Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Communicate With Friends',style: TextStyle(color: Colors.white,fontSize: 17),),
-                ),
-              ],
+          SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: Card(
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              elevation: 10.0,
+              margin: const EdgeInsets.only(right: 8.0,left: 8.0,bottom: 8.0,top: 0),
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: const [
+                  Image(
+                      image: NetworkImage('https://as1.ftcdn.net/v2/jpg/03/48/07/84/1000_F_348078448_YLQP7PyisReZZzuU6snFFE4C4TxSNkel.jpg'),fit: BoxFit.cover,width: double.infinity,),
+                  Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text('Communicate With Friends',style: TextStyle(color: Colors.white,fontSize: 17),),
+                  ),
+                ],
+              ),
+
             ),
           ),
           ListView.separated(

@@ -39,10 +39,11 @@ Widget defaultFormField(
 Widget specialButton({
   Function? onPress,
   String? text,
+  double height = 50
 }) {
   return SizedBox(
     width: double.infinity,
-    height: 60,
+    height: height,
     child: ElevatedButton(
         onPressed: () {
         onPress!();
