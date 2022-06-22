@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/social_layout_cubit/social_cubit.dart';
 import 'package:social_app/business_logic/social_layout_cubit/social_state.dart';
+import 'package:social_app/presentation/style/icon_broken.dart';
+
+import '../components.dart';
 
 
 
@@ -15,11 +18,13 @@ class AddPostScreen extends StatelessWidget {
           var cubit = SocialCubit.get(context);
           return Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            foregroundColor: Colors.black,
-            elevation: 0,
-            title: cubit.appBarTitles[2],
+          appBar: buildAppBar(
+              appBarTitleWidget: cubit.appBarTitles[2],
+            leading: IconButton(
+                onPressed: (){
+                  Navigator.pop(context);
+                },
+                icon: Icon(IconBroken.Arrow___Left_2)),
           ),
           body: const Center(child: Text('Add Post'),),
         );},

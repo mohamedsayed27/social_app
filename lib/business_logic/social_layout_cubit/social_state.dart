@@ -9,3 +9,7 @@ class GetUserErrorState extends SocialState{
 class ChangeBottomNavBarState extends SocialState{}
 class AddPostScreenState extends SocialState{}
 
+class GetPickedImageSuccessState extends SocialState{}
+class GetPickedImageErrorState extends SocialState{}
+class GetPickedCoverSuccessState extends SocialState{}
+class GetPickedCoverErrorState extends SocialState{}

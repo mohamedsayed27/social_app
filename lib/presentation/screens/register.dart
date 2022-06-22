@@ -66,7 +66,6 @@ class RegisterScreen extends StatelessWidget {
                                     },
                                     onSubmit: (){},
                                     onChange: (){},
-                                    obscure: false,
                                     controller: userNameController,
                                     prefixIcon: Icons.person,
                                     label: 'Name',
@@ -82,7 +81,6 @@ class RegisterScreen extends StatelessWidget {
                                     },
                                     onSubmit: (){},
                                     onChange: (){},
-                                    obscure: false,
                                     controller: emailController,
                                     prefixIcon: Icons.email,
                                     label: 'Email',
@@ -94,7 +92,7 @@ class RegisterScreen extends StatelessWidget {
                                     onSubmit: (){
 
                                     },
-                                    obscure: SocialRegisterCubit.get(context).isVisible,
+                                    obscureText: SocialRegisterCubit.get(context).isVisible,
                                     validate: (v){
                                       if(v.isEmpty){
                                         return 'please enter your password';
@@ -123,7 +121,6 @@ class RegisterScreen extends StatelessWidget {
                                     },
                                     onSubmit: (){},
                                     onChange: (){},
-                                    obscure: false,
                                     controller: phoneController,
                                     prefixIcon: Icons.phone,
                                     label: 'Phone',

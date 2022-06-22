@@ -54,7 +54,6 @@ class SocialLoginScreen extends StatelessWidget {
                               },
                             onSubmit: (){},
                               onChange: (){},
-                              obscure: false,
                               controller: emailController,
                               prefixIcon: Icons.email,
                               label: 'Email',
@@ -66,7 +65,7 @@ class SocialLoginScreen extends StatelessWidget {
                             onSubmit: (){
 
                             },
-                              obscure: SocialLoginCubit.get(context).isVisible,
+                              obscureText: SocialLoginCubit.get(context).isVisible,
                               validate: (v){
                               if(v.isEmpty){
                                 return 'please en';

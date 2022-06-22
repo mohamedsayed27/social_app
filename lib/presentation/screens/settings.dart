@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/business_logic/social_layout_cubit/social_cubit.dart';
 import 'package:social_app/business_logic/social_layout_cubit/social_state.dart';
 import 'package:social_app/presentation/components.dart';
+import 'package:social_app/presentation/screens/add_post.dart';
+import 'package:social_app/presentation/screens/edit_screen.dart';
 import 'package:social_app/presentation/style/icon_broken.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -20,7 +22,7 @@ class SettingsScreen extends StatelessWidget {
                 condition: model != null,
                 builder: (context) => Column(
                   children: [
-                    Container(
+                    SizedBox(
                       height: 250,
                       child: Stack(
                         alignment: AlignmentDirectional.bottomCenter,
@@ -59,7 +61,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                     Text(
                       '${model.name}',
-                      style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+                      style: const TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
                     const SizedBox(
                       height: 5,
                     ),
@@ -67,13 +69,13 @@ class SettingsScreen extends StatelessWidget {
                       '${model.bio}',
                       style: Theme.of(context).textTheme.caption,),
                     Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 20),
+                      padding:  const EdgeInsets.symmetric(vertical: 20),
                       child: Row(
                         children: [
                           Expanded(
                             child: Column(
                               children: [
-                                Text(
+                                const Text(
                                   '100',
                                   style: TextStyle(fontSize: 15 , fontWeight: FontWeight.bold),),
                                 Text(
@@ -85,7 +87,7 @@ class SettingsScreen extends StatelessWidget {
                           Expanded(
                             child: Column(
                               children: [
-                                Text(
+                                const Text(
                                   '40',
                                   style: TextStyle(fontSize: 15 , fontWeight: FontWeight.bold),),
                                 Text(
@@ -97,9 +99,9 @@ class SettingsScreen extends StatelessWidget {
                           Expanded(
                             child: Column(
                               children: [
-                                Text(
+                                const Text(
                                   '10k',
-                                  style: TextStyle(fontSize: 15 , fontWeight: FontWeight.bold),),
+                                  style:  TextStyle(fontSize: 15 , fontWeight: FontWeight.bold),),
                                 Text(
                                   'follower',
                                   style: Theme.of(context).textTheme.caption,),
@@ -109,11 +111,11 @@ class SettingsScreen extends StatelessWidget {
                           Expanded(
                             child: Column(
                               children: [
-                                Text(
+                                const Text(
                                   '100k',
                                   style: TextStyle(fontSize: 15 , fontWeight: FontWeight.bold),),
                                 Text(
-                                  'foolowing',
+                                  'following',
                                   style: Theme.of(context).textTheme.caption,),
                               ],
                             ),
@@ -125,18 +127,22 @@ class SettingsScreen extends StatelessWidget {
                       children: [
                         Expanded(
                             child: OutlinedButton(
-                              onPressed: (){},
-                              child: Text('Edit Profile'),
+                              onPressed: (){
+                                navigateTo(context: context, navigatedScreen: const AddPostScreen());
+                              },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(Colors.blue),
                                   foregroundColor:MaterialStateProperty.all(Colors.white),
                               overlayColor:MaterialStateProperty.all(Colors.white24), ),
+                              child: const Text('Add Post'),
                             )
                         ),
-                        SizedBox(width: 5,),
+                        const SizedBox(width: 5,),
                         OutlinedButton(
-                            onPressed: (){},
-                            child: Icon(IconBroken.Edit,size: 20,),
+                            onPressed: (){
+                              navigateTo(context: context, navigatedScreen:   EditProfile());
+                            },
+                            child: const Icon(IconBroken.Edit,size: 20,),
 
                         )
                       ],
@@ -144,7 +150,7 @@ class SettingsScreen extends StatelessWidget {
 
                   ],
                 ),
-                fallback: (context) => Center(child: CircularProgressIndicator(),)),
+                fallback: (context) => const Center(child:  CircularProgressIndicator(),)),
           );
         },
         listener: (context, state){});
