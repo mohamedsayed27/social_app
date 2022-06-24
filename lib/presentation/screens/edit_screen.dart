@@ -13,13 +13,17 @@ class EditProfile extends StatelessWidget {
    EditProfile({Key? key}) : super(key: key);
    final nameController = TextEditingController();
    final bioController = TextEditingController();
-
+   final phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SocialCubit, SocialState>(
         builder: (context , state) {
           var userModel = SocialCubit.get(context).socialUserModel;
           var cubit = SocialCubit.get(context);
+          nameController.text = userModel!.name!;
+          bioController.text = userModel.bio!;
+          phoneController.text = userModel.phone!;
+
 
           return Scaffold(
             backgroundColor: Colors.white,
@@ -31,12 +35,16 @@ class EditProfile extends StatelessWidget {
                   },
                   icon: const Icon(IconBroken.Arrow___Left_2)),
               actions: [
-                buildTextButton(onPress: (){}, child: const Text('UPDATE')),
+                buildTextButton(
+                    onPress: (){
+                      cubit.updateUserData(phone: phoneController.text, bio: bioController.text, name: nameController.text);
+                    },
+                    child: const Text('UPDATE')),
                 const SizedBox(width: 20,)
               ],
             ),
             body: ConditionalBuilder(
-                condition: userModel != null,
+                condition: state is! UpdateUserDataLoadingState,
                 builder: (context) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -62,14 +70,19 @@ class EditProfile extends StatelessWidget {
                                           topRight: Radius.circular(4),
                                         ),
                                         image: DecorationImage(
-                                            image: NetworkImage('${userModel!.cover}'),
+                                            image: cubit.coverImage == null? NetworkImage('${userModel.cover}') : FileImage(cubit.coverImage!) as ImageProvider,
                                             fit: BoxFit.cover
                                         )
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: CircleAvatar(backgroundColor: Colors.grey.shade400,child: IconButton(onPressed: (){}, icon: const Icon(IconBroken.Camera,color: Colors.white,))),
+                                    child: CircleAvatar(backgroundColor: Colors.grey.shade400,child: IconButton(
+                                        onPressed: (){
+                                          cubit.getCoverPick();
+                                        },
+                                        icon: const Icon(IconBroken.Camera,color: Colors.white,))
+                                    ),
                                   )
                                 ]
                               ),
@@ -96,6 +109,7 @@ class EditProfile extends StatelessWidget {
                         height: 20,
                       ),
                           defaultFormField(
+                              onChange: (){},
                               prefixIcon: IconBroken.User,
                               controller: nameController,
                               label: 'Name',
@@ -109,12 +123,27 @@ class EditProfile extends StatelessWidget {
                             height: 10,
                           ),
                           defaultFormField(
-                            prefixIcon: IconBroken.Info_Circle,
+                              onChange: (){},
+                              prefixIcon: IconBroken.Info_Circle,
                             controller: bioController,
                             label: 'Bio',
                               validate: (String value){
                                 if(value.isEmpty){
                                   return 'Please Enter Your name';
+                                }
+                              }
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          defaultFormField(
+                            onChange: (){},
+                              prefixIcon: IconBroken.Call,
+                              controller: phoneController,
+                              label: 'Phone',
+                              validate: (String value){
+                                if(value.isEmpty){
+                                  return 'Please Enter Your Phone';
                                 }
                               }
                           )

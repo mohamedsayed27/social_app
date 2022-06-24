@@ -82,10 +82,10 @@ PreferredSizeWidget buildAppBar(
 }
 
 Widget buildTextButton(
-    {required Function? onPress, required Widget child}) {
+    {required Function onPress, required Widget child}) {
   return TextButton(
       onPressed: () {
-        onPress!();
+        onPress();
       },
       child: child);
 }

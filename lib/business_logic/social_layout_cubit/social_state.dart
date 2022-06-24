@@ -13,3 +13,11 @@ class GetPickedImageSuccessState extends SocialState{}
 class GetPickedImageErrorState extends SocialState{}
 class GetPickedCoverSuccessState extends SocialState{}
 class GetPickedCoverErrorState extends SocialState{}
+
+class UpdateUserDataLoadingState extends SocialState{}
+class UpdateUserDataErrorState extends SocialState{}
+
+class UploadImageSuccessState extends SocialState{}
+class UploadImageErrorState extends SocialState{}
+class UploadCoverSuccessState extends SocialState{}
+class UploadCoverErrorState extends SocialState{}
