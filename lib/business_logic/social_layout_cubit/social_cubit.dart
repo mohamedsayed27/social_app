@@ -47,7 +47,7 @@ class SocialCubit extends Cubit<SocialState> {
   List<Widget> appBarTitles = [
     const Text('Home'),
     const Text('Chats'),
-    const Text('Add post'),
+    const Text('Create post'),
     const Text('Users'),
     const Text('Settings')
   ];
@@ -62,7 +62,6 @@ class SocialCubit extends Cubit<SocialState> {
   }
 
   File? profileImage;
-  File? coverImage;
   var picker = ImagePicker();
 
   Future<void> getImagePick() async {
@@ -74,7 +73,7 @@ class SocialCubit extends Cubit<SocialState> {
       emit(GetPickedImageErrorState());
     }
   }
-
+  File? coverImage;
   Future<void> getCoverPick() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -134,23 +133,6 @@ class SocialCubit extends Cubit<SocialState> {
     });
   }
 
-  // void updateAllUserData({
-  //   required String phone,
-  //   required String bio,
-  //   required String name,
-  // }) {
-  //   emit(UpdateUserDataLoadingState());
-  //   if(coverImage!=null){
-  //     uploadCoverImage();
-  //   }else if(profileImage!=null) {
-  //     uploadProfileImage();
-  //   }else if(profileImage!=null && coverImage!=null) {
-  //
-  //   }else{
-  //     updateUserData(name: name, phone: phone, bio: bio);
-  //   }
-  // }
-
   void updateUserData({
     required String phone,
     required String bio,
@@ -171,6 +153,45 @@ class SocialCubit extends Cubit<SocialState> {
       getUsers();
     }).catchError((error){
       emit(UpdateUserDataErrorState());
+    });
+  }
+
+  File? postImage;
+  Future<void> getPostImagePick() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      postImage = File(pickedFile.path);
+      emit(GetPickedPostImageSuccessState());
+    } else {
+      emit(GetPickedPostImageErrorState());
+    }
+  }
+
+  void createPost({
+    required String phone,
+    required String uId,
+    required String image,
+    required String text,
+    required String dateTime,
+
+  }) {
+    emit(CreatePostLoadingState());
+    FirebaseStorage.instance
+        .ref()
+        .child('users/${Uri.file(coverImage!.path).pathSegments.last}')
+        .putFile(coverImage!)
+        .then((value) {
+      value
+          .ref
+          .getDownloadURL()
+          .then((value) {
+
+        emit(CreatePostSuccessState());
+      }).catchError((error) {
+        emit(CreatePostErrorState());
+      });
+    }).catchError((error) {
+      emit(CreatePostErrorState());
     });
   }
 }

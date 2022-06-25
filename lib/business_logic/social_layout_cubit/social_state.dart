@@ -21,3 +21,12 @@ class UploadImageSuccessState extends SocialState{}
 class UploadImageErrorState extends SocialState{}
 class UploadCoverSuccessState extends SocialState{}
 class UploadCoverErrorState extends SocialState{}
+
+
+
+class CreatePostLoadingState extends SocialState{}
+class CreatePostSuccessState extends SocialState{}
+class CreatePostErrorState extends SocialState{}
+
+class GetPickedPostImageSuccessState extends SocialState{}
+class GetPickedPostImageErrorState extends SocialState{}
