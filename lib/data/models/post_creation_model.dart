@@ -26,4 +26,18 @@ class CreatePostModel{
     postImage = json['postImage'];
   }
 
+
+  Map<String,dynamic> toMap(){
+    return {
+      'name' : name,
+      'UId' : uId,
+      'image' : image,
+      'postImage' : postImage,
+      'dateTime' : dateTime,
+      'text' : text,
+
+
+    };
+  }
+
 }

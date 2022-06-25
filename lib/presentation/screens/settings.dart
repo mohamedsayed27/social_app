@@ -128,7 +128,7 @@ class SettingsScreen extends StatelessWidget {
                         Expanded(
                             child: OutlinedButton(
                               onPressed: (){
-                                navigateTo(context: context, navigatedScreen: const AddPostScreen());
+                                navigateTo(context: context, navigatedScreen:  AddPostScreen());
                               },
                               style: ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(Colors.blue),

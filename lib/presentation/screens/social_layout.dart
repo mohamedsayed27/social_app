@@ -48,7 +48,7 @@ class SocialLayout extends StatelessWidget {
         },
         listener: (context , state){
           if(state is AddPostScreenState){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const AddPostScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) =>  AddPostScreen()));
           }
         }
     );

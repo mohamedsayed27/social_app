@@ -7,13 +7,15 @@ import 'package:social_app/presentation/style/icon_broken.dart';
 import '../components.dart';
 
 class AddPostScreen extends StatelessWidget {
-  const AddPostScreen({Key? key}) : super(key: key);
+   AddPostScreen({Key? key}) : super(key: key);
+   final textController = TextEditingController();
 
-  @override
+   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SocialCubit, SocialState>(
         builder: (context, state) {
           var cubit = SocialCubit.get(context);
+          var now = DateTime.now();
           return Scaffold(
             backgroundColor: Colors.white,
             appBar: buildAppBar(
@@ -25,7 +27,16 @@ class AddPostScreen extends StatelessWidget {
                     },
                     icon: const Icon(IconBroken.Arrow___Left_2)),
                 actions: [
-                  TextButton(onPressed: () {}, child: const Text('POST')),
+                  TextButton(
+                      onPressed: () {
+                        if(cubit.postImage == null){
+                          cubit.createPost(text: textController.text, dateTime: now.toString());
+                        }else{
+                          cubit.uploadPostImage(text: textController.text, dateTime: now.toString());
+                        }
+                      },
+                      child: const Text('POST')
+                  ),
                   const SizedBox(
                     width: 5,
                   )
@@ -34,6 +45,10 @@ class AddPostScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
+                  if(state is CreatePostLoadingState)
+                    const LinearProgressIndicator(),
+                  if(state is CreatePostLoadingState)
+                    const SizedBox(height: 10,),
                   Row(
                     children: [
                       const CircleAvatar(
@@ -55,6 +70,7 @@ class AddPostScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: TextFormField(
+                      controller: textController,
                       decoration: InputDecoration(
                         hintText: 'Write what you want ....',
                         border: InputBorder.none
