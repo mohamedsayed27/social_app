@@ -78,11 +78,42 @@ class AddPostScreen extends StatelessWidget {
 
                     ),
                   ),
+                  if(cubit.postImage != null)Stack(
+                      alignment: AlignmentDirectional.topEnd,
+                      children:[
+                        Container(
+                          height: 175,
+                          width: double.infinity,
+                          decoration:  BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(4),
+                                topRight: Radius.circular(4),
+                              ),
+                              image: DecorationImage(
+                                  image: FileImage(cubit.postImage!),
+                                  fit: BoxFit.cover
+                              )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CircleAvatar(backgroundColor: Colors.grey.shade400,child: IconButton(
+                              onPressed: (){
+                                cubit.removePostImage();
+                              },
+                              icon: const Icon(Icons.close,color: Colors.white,))
+                          ),
+                        )
+                      ]
+                  ),
+                  if(cubit.postImage != null)const SizedBox(height: 10,),
                   Row(
                     children: [
                       Expanded(
                         child: TextButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              cubit.getPostImagePick();
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
