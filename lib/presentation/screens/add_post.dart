@@ -7,10 +7,10 @@ import 'package:social_app/presentation/style/icon_broken.dart';
 import '../components.dart';
 
 class AddPostScreen extends StatelessWidget {
-   AddPostScreen({Key? key}) : super(key: key);
-   final textController = TextEditingController();
+  AddPostScreen({Key? key}) : super(key: key);
+  final textController = TextEditingController();
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<SocialCubit, SocialState>(
         builder: (context, state) {
@@ -72,8 +72,8 @@ class AddPostScreen extends StatelessWidget {
                     child: TextFormField(
                       controller: textController,
                       decoration: InputDecoration(
-                        hintText: 'Write what you want ....',
-                        border: InputBorder.none
+                          hintText: 'Write what you want ....',
+                          border: InputBorder.none
                       ),
 
                     ),
