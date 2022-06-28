@@ -59,7 +59,7 @@ class AddPostScreen extends StatelessWidget {
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                          children: const [
                             Text('Anyone Here',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.bold,height: 1.3)),
                             Text('27 May 2022',style: TextStyle(fontSize: 12,color: Colors.grey,height: 1.3))
                           ],
@@ -71,7 +71,7 @@ class AddPostScreen extends StatelessWidget {
                   Expanded(
                     child: TextFormField(
                       controller: textController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'Write what you want ....',
                           border: InputBorder.none
                       ),

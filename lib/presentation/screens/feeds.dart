@@ -14,9 +14,9 @@ class FeedsScreen extends StatelessWidget {
     return BlocConsumer<SocialCubit,SocialState>(
 
         builder: (context , state){
-          var model = SocialCubit.get(context).posts;
+          var posts = SocialCubit.get(context).posts;
           return ConditionalBuilder(
-              condition: model.isNotEmpty,
+              condition: SocialCubit.get(context).socialUserModel !=null && posts.isNotEmpty,
               builder: (context) => SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
                 child: Column(
@@ -45,9 +45,9 @@ class FeedsScreen extends StatelessWidget {
                     ListView.separated(
                         shrinkWrap: true,
                         physics:const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context,index) => buildPostItem(context,model[index]),
+                        itemBuilder: (context,index) => buildPostItem(context,posts[index],index),
                         separatorBuilder: (context,index) => const SizedBox(height: 5,),
-                        itemCount: model.length)
+                        itemCount: posts.length)
                   ],
                 ),
               ),
@@ -57,7 +57,7 @@ class FeedsScreen extends StatelessWidget {
   }
 
 
-  Widget buildPostItem(context, CreatePostModel model) {
+  Widget buildPostItem(context, CreatePostModel model,index) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5.0,
@@ -85,7 +85,7 @@ class FeedsScreen extends StatelessWidget {
                           Icon(Icons.verified,color: Colors.blue,size: 15,)
                         ],
                       ),
-                       Text(model.dateTime!,style: TextStyle(fontSize: 12,color: Colors.grey,height: 1.3))
+                       Text(model.dateTime!,style: const TextStyle(fontSize: 12,color: Colors.grey,height: 1.3))
                     ],
                   ),
                 ),
@@ -151,10 +151,12 @@ class FeedsScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: const [
-                          Icon(IconBroken.Heart,color: Colors.red,),
-                          SizedBox(width: 5,),
-                          Text('120'),
+                        children:  [
+                          const Icon(IconBroken.Heart,color: Colors.red,),
+                          const SizedBox(width: 5,),
+                          Text(
+                              '${SocialCubit.get(context).likesNumber[index]}'
+                          ),
                         ],
                       ),
                     ),
@@ -204,12 +206,14 @@ class FeedsScreen extends StatelessWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: (){},
+                  onTap: (){
+                    SocialCubit.get(context).postLikes(SocialCubit.get(context).postsId[index]);
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(top: 5.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
+                      children:  const[
                         Icon(IconBroken.Heart,color: Colors.red,),
                         SizedBox(width: 5,),
                         Text('Like'),
@@ -226,5 +230,4 @@ class FeedsScreen extends StatelessWidget {
     );
   }
 }
-
 
