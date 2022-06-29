@@ -6,6 +6,8 @@ import 'package:social_app/business_logic/social_layout_cubit/social_state.dart'
 import 'package:social_app/data/models/post_creation_model.dart';
 import 'package:social_app/presentation/style/icon_broken.dart';
 
+import '../../data/models/social_user_model.dart';
+
 class FeedsScreen extends StatelessWidget {
   const FeedsScreen({Key? key}) : super(key: key);
 
@@ -15,6 +17,7 @@ class FeedsScreen extends StatelessWidget {
 
         builder: (context , state){
           var posts = SocialCubit.get(context).posts;
+          var userModel = SocialCubit.get(context).socialUserModel;
           return ConditionalBuilder(
               condition: SocialCubit.get(context).socialUserModel !=null && posts.isNotEmpty,
               builder: (context) => SingleChildScrollView(
@@ -45,7 +48,7 @@ class FeedsScreen extends StatelessWidget {
                     ListView.separated(
                         shrinkWrap: true,
                         physics:const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context,index) => buildPostItem(context,posts[index],index),
+                        itemBuilder: (context,index) => buildPostItem(context,posts[index],index,userModel!),
                         separatorBuilder: (context,index) => const SizedBox(height: 5,),
                         itemCount: posts.length)
                   ],
@@ -57,7 +60,7 @@ class FeedsScreen extends StatelessWidget {
   }
 
 
-  Widget buildPostItem(context, CreatePostModel model,index) {
+  Widget buildPostItem(context, CreatePostModel model,index ,SocialUserModel userModel) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5.0,
@@ -69,8 +72,8 @@ class FeedsScreen extends StatelessWidget {
           children: [
             Row(
               children: [
-                const CircleAvatar(
-                  backgroundImage: NetworkImage('https://as1.ftcdn.net/v2/jpg/03/02/78/26/1000_F_302782694_VftvTDVoDT6kYW3lXTqvp8bmH3inmpT8.jpg'),
+                 CircleAvatar(
+                  backgroundImage: model.image !=null? NetworkImage(model.image!) : const NetworkImage('https://as1.ftcdn.net/v2/jpg/03/02/78/26/1000_F_302782694_VftvTDVoDT6kYW3lXTqvp8bmH3inmpT8.jpg'),
                   radius: 27,
                 ),
                 const SizedBox(width:10),
@@ -79,8 +82,8 @@ class FeedsScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        children: const [
-                          Text('Anyone Here',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.bold,height: 1.3)),
+                        children:  [
+                          Text(model.name!,style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.bold,height: 1.3)),
                           SizedBox(width: 3,),
                           Icon(Icons.verified,color: Colors.blue,size: 15,)
                         ],
@@ -192,11 +195,13 @@ class FeedsScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: InkWell(
-                    onTap: (){},
+                    onTap: (){
+
+                    },
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(model.image!),
+                          backgroundImage: NetworkImage(userModel.image!),
                           radius: 20,
                         ),
                         const SizedBox(width: 10.0,),
