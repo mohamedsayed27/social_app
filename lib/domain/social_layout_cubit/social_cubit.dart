@@ -321,4 +321,18 @@ void getComments(){
   });
 }
 
+
+List<SocialUserModel> socialUserModelList = [];
+  void getUsersChat() {
+    emit(GetChatUsersLoadingState());
+    FirebaseFirestore.instance.collection('users').get().then((value) {
+      value.docs.forEach((element) {
+        socialUserModelList.add(SocialUserModel.fromJson(element.data()));
+      });
+      emit(GetChatUsersSuccessState());
+    }).catchError((error) {
+      emit(GetChatUsersErrorState(error.toString()));
+    });
+  }
+
 }

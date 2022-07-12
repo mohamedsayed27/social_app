@@ -1,6 +1,8 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../data/models/social_user_model.dart';
 import '../../domain/social_layout_cubit/social_cubit.dart';
 import '../../domain/social_layout_cubit/social_state.dart';
 
@@ -11,26 +13,30 @@ class ChatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<SocialCubit, SocialState>(
         builder: (context, state) {
-          return ListView.separated(
-              physics: BouncingScrollPhysics(),
-              itemBuilder: (context , index) => buildChatItem(),
-              separatorBuilder: (context , index) =>Container(height: 1,color: Colors.black,),
-              itemCount: 30);
+          var usersList = SocialCubit.get(context).socialUserModelList;
+          return ConditionalBuilder(
+              condition: usersList.isNotEmpty,
+              builder: (context) => ListView.separated(
+                  physics: BouncingScrollPhysics(),
+                  itemBuilder: (context , index) => buildChatItem(usersList[index]),
+                  separatorBuilder: (context , index) =>Container(height: 1,color: Colors.black,),
+                  itemCount: usersList.length),
+              fallback: (context) => const Center(child: CircularProgressIndicator()));
         },
         listener: (context, state) {});
   }
 
-  Widget buildChatItem(){
+  Widget buildChatItem(SocialUserModel model){
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Row(
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/social-app-2735e.appspot.com/o/users%2Fimage_picker7893180471670214747.jpg?alt=media&token=74b5c580-36c2-4a90-8907-cd753f1a841b'),
+            backgroundImage: NetworkImage('${model.image}'),
             radius: 27,
           ),
           SizedBox(width: 15,),
-          Text('Mohamed Sayed'),
+          Text('${model.name}'),
         ],
       ),
     );

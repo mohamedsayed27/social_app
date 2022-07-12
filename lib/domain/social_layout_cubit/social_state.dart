@@ -49,6 +49,12 @@ class GetPostsErrorState extends SocialState{
   GetPostsErrorState(this.error);
 }
 
+class GetChatUsersLoadingState extends SocialState{}
+class GetChatUsersSuccessState extends SocialState{}
+class GetChatUsersErrorState extends SocialState{
+  final String error;
+  GetChatUsersErrorState(this.error);
+}
 
 class PostLikeSuccessState extends SocialState{}
 class PostLikeErrorState extends SocialState{
