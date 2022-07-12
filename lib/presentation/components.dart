@@ -11,7 +11,9 @@ Widget defaultFormField(
     IconData? prefixIcon,
     Function? onTab,
      bool obscureText = false,
-    Function? validate}) {
+    Function? validate
+
+    }) {
   return TextFormField(
     controller: controller,
     obscureText: obscureText,

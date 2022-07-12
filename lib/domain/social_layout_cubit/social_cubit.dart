@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:social_app/business_logic/social_layout_cubit/social_state.dart';
+import 'package:social_app/domain/social_layout_cubit/social_state.dart';
 import 'package:social_app/constants.dart';
 import 'package:social_app/presentation/screens/add_post.dart';
 import 'package:social_app/presentation/screens/chats.dart';
@@ -12,6 +12,7 @@ import 'package:social_app/presentation/screens/settings.dart';
 import 'package:social_app/presentation/screens/users.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import '../../data/models/post_creation_model.dart';
+import '../../data/models/comment_model.dart';
 import '../../data/models/social_user_model.dart';
 
 class SocialCubit extends Cubit<SocialState> {
@@ -39,7 +40,7 @@ class SocialCubit extends Cubit<SocialState> {
 
   int currentIndex = 0;
   List<Widget> screens = [
-    const FeedsScreen(),
+     FeedsScreen(),
     const ChatsScreen(),
     AddPostScreen(),
     const UsersScreen(),
@@ -193,10 +194,10 @@ class SocialCubit extends Cubit<SocialState> {
       value.ref.getDownloadURL().then((value) {
         createPost(text: text, dateTime: dateTime, postImage: value);
       }).catchError((error) {
-        emit(CreatePostErrorState());
+        emit(CreatePostSuccessState());
       });
     }).catchError((error) {
-      emit(CreatePostErrorState());
+      emit(CreatePostErrorState(error.toString()));
     });
   }
 
@@ -226,20 +227,19 @@ class SocialCubit extends Cubit<SocialState> {
   List<CreatePostModel> posts = [];
   List<String> postsId = [];
   List<int> likesNumber = [];
-
-
   void getPosts() {
     emit(GetPostsLoadingState());
     FirebaseFirestore.instance.collection('posts').get().then((value) {
-     value.docs.forEach((element) {
-
+     for (var element in value.docs) {
        element.reference.collection('likes').get().then((value) {
          likesNumber.add(value.docs.length);
          postsId.add(element.id);
          posts.add(CreatePostModel.fromJson(element.data()));
-         emit(GetPostsSuccessState());
+         emit(FillingPostModelSuccessState());
        });
-     });
+     }
+     getCommentsNumber();
+     emit(GetPostsSuccessState());
     }).catchError((error) {
       emit(GetPostsErrorState(error.toString()));
     });
@@ -259,4 +259,66 @@ class SocialCubit extends Cubit<SocialState> {
       emit(PostLikeErrorState(error.toString()));
     });
   }
+
+
+
+
+  void createComment({
+    required String commentText,
+    required String postId,
+  }){
+    emit(CreateCommentLoadingState());
+    CommentModel  commentModel = CommentModel(
+      name: socialUserModel!.name,
+      image: socialUserModel!.image,
+      comment: commentText,
+    );
+    FirebaseFirestore.instance
+        .collection('posts')
+        .doc(postId)
+        .collection('comments')
+        .add(commentModel.toMap())
+        .then((value) {
+          emit(CreateCommentSuccessState());
+    })
+        .catchError((error){
+      emit(CreateCommentErrorState(error.toString()));
+
+    });
+}
+
+  List<CommentModel> comments = [];
+  List<int> commentsNumber = [];
+void getCommentsNumber(){
+  FirebaseFirestore.instance.collection('posts').get().then((value) {
+    for (var element in value.docs) {
+      element.reference.collection('comments').get().then((value) {
+        commentsNumber.add(value.docs.length);
+        emit(PostCommentNumbersSuccessState());
+      });
+    }
+    print(commentsNumber.length);
+  }).catchError((error) {
+    emit(PostCommentNumbersErrorState(error.toString()));
+  });
+}
+
+void getComments(){
+
+  FirebaseFirestore.instance.collection('posts').get().then((value) {
+    for (var element in value.docs) {
+      element.reference.collection('comments').get().then((value) {
+        for (var element in value.docs){
+          comments.add(CommentModel.fromJson(element.data()));
+        }
+        emit(PostCommentSuccessState());
+
+      });
+    }
+  }).catchError((error){
+    emit(PostCommentErrorState(error.toString()));
+
+  });
+}
+
 }

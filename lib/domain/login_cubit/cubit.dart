@@ -1,10 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/business_logic/login_cubit/states.dart';
+import 'package:social_app/domain/login_cubit/states.dart';
 import 'package:social_app/constants.dart';
-
-import '../../data/local/cash_helper.dart';
 
 
 class SocialLoginCubit extends Cubit<SocialLoginStates> {

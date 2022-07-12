@@ -2,10 +2,10 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/business_logic/register_cubit/RegStates.dart';
+import 'package:social_app/domain/register_cubit/RegStates.dart';
 import 'package:social_app/presentation/screens/social_layout.dart';
 
-import '../../business_logic/register_cubit/RegCubit.dart';
+import '../../domain/register_cubit/RegCubit.dart';
 import '../components.dart';
 
 class RegisterScreen extends StatelessWidget {

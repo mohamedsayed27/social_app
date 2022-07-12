@@ -1,9 +1,8 @@
-import 'package:bloc/bloc.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/bloc_observer.dart';
-import 'package:social_app/business_logic/social_layout_cubit/social_cubit.dart';
+import 'package:social_app/domain/social_layout_cubit/social_cubit.dart';
 import 'package:social_app/data/local/cash_helper.dart';
 import 'package:social_app/presentation/screens/login.dart';
 import 'package:social_app/presentation/screens/social_layout.dart';

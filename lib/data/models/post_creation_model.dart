@@ -36,7 +36,6 @@ class CreatePostModel{
       'dateTime' : dateTime,
       'text' : text,
 
-
     };
   }
 

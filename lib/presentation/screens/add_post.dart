@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:social_app/business_logic/social_layout_cubit/social_cubit.dart';
-import 'package:social_app/business_logic/social_layout_cubit/social_state.dart';
+import 'package:social_app/domain/social_layout_cubit/social_cubit.dart';
+import 'package:social_app/domain/social_layout_cubit/social_state.dart';
 import 'package:social_app/presentation/style/icon_broken.dart';
 
 import '../components.dart';
@@ -34,6 +34,7 @@ class AddPostScreen extends StatelessWidget {
                         }else{
                           cubit.uploadPostImage(text: textController.text, dateTime: now.toString());
                         }
+                        textController.text = '';
                       },
                       child: const Text('POST')
                   ),
