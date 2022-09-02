@@ -35,6 +35,7 @@ class AddPostScreen extends StatelessWidget {
                           cubit.uploadPostImage(text: textController.text, dateTime: now.toString());
                         }
                         textController.text = '';
+                        SocialCubit.get(context).removePostImage();
                       },
                       child: const Text('POST')
                   ),

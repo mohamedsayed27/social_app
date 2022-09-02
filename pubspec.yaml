@@ -45,6 +45,10 @@ dependencies:
   bloc: ^7.2.1
   image_picker: ^0.8.5+3
   firebase_storage: ^10.2.18
+  firebase_messaging: ^13.0.0
+
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

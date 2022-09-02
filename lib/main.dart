@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/bloc_observer.dart';
@@ -16,6 +17,15 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  String? token =  await FirebaseMessaging.instance.getToken();
+  FirebaseMessaging.onMessage.listen((event) {
+    print(event.data.toString());
+  });
+  FirebaseMessaging.onMessageOpenedApp.listen((event) {
+    print(event.data.toString());
+  });
+
+  print(token);
   late Widget startWidget;
    userId =  CashHelper.getData(key: 'uId');
   if(userId != null){
@@ -29,13 +39,13 @@ void main() async{
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({Key? key, required this.startWidget}) : super(key: key);
+   const MyApp({Key? key, required this.startWidget}) : super(key: key);
    final Widget startWidget;
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
         providers: [
-          BlocProvider(create: (BuildContext context) => SocialCubit()..getUsers()..getPosts()..getUsersChat()),
+          BlocProvider(create: (BuildContext context) => SocialCubit()..getUsers()..getPosts()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

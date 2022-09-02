@@ -17,61 +17,58 @@ class FeedsScreen extends StatelessWidget {
         builder: (context, state) {
           var posts = SocialCubit.get(context).posts;
           var userModel = SocialCubit.get(context).socialUserModel;
-          return ConditionalBuilder(
-              condition: SocialCubit.get(context).socialUserModel != null &&
-                  posts.isNotEmpty ,
-              builder: (context) => SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 200,
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 200,
+                  width: double.infinity,
+                  child: Card(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    elevation: 10.0,
+                    margin: const EdgeInsets.only(
+                        right: 8.0, left: 8.0, bottom: 8.0, top: 0),
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: const [
+                        Image(
+                          image: NetworkImage(
+                              'https://as1.ftcdn.net/v2/jpg/03/48/07/84/1000_F_348078448_YLQP7PyisReZZzuU6snFFE4C4TxSNkel.jpg'),
+                          fit: BoxFit.cover,
                           width: double.infinity,
-                          child: Card(
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            elevation: 10.0,
-                            margin: const EdgeInsets.only(
-                                right: 8.0, left: 8.0, bottom: 8.0, top: 0),
-                            child: Stack(
-                              alignment: Alignment.bottomRight,
-                              children: const [
-                                Image(
-                                  image: NetworkImage(
-                                      'https://as1.ftcdn.net/v2/jpg/03/48/07/84/1000_F_348078448_YLQP7PyisReZZzuU6snFFE4C4TxSNkel.jpg'),
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Text(
-                                    'Communicate With Friends',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 17),
-                                  ),
-                                ),
-                              ],
-                            ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Communicate With Friends',
+                            style: TextStyle(
+                                color: Colors.white, fontSize: 17),
                           ),
                         ),
-                        ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              _controllers.add( TextEditingController());
-                              return buildPostItem(
-                                  context, posts[index], index, userModel!);
-                            },
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                            itemCount: posts.length)
                       ],
                     ),
                   ),
-              fallback: (context) => const Center(
-                    child: CircularProgressIndicator(),
-                  ));
+                ),
+                ConditionalBuilder(
+                    condition: SocialCubit.get(context).socialUserModel != null ,
+                    builder: (context) => ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          _controllers.add( TextEditingController());
+                          return buildPostItem(
+                              context, posts[index], index, userModel!);
+                        },
+                        separatorBuilder: (context, index) =>
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        itemCount: posts.length),
+                    fallback: (context) => const Center(child: CircularProgressIndicator(),))
+              ],
+            ),
+          );
         },
         listener: (context, state) {
 
@@ -79,7 +76,7 @@ class FeedsScreen extends StatelessWidget {
   }
 
   Widget buildPostItem(
-      context, CreatePostModel model, index, SocialUserModel userModel ) {
+      context, CreatePostModel model, index, SocialUserModel userModel) {
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       elevation: 5.0,
@@ -197,13 +194,13 @@ class FeedsScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 5.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
-                        children:  const [
-                          Icon(
+                        children: [
+                           const Icon(
                             IconBroken.Message,
                             color: Colors.amber,
                           ),
                           SizedBox(width: 5.0),
-                          Text("2"),
+                          Text('${SocialCubit.get(context).commentsNumber[index]}'),
                         ],
                       ),
                     ),

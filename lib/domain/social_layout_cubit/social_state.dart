@@ -39,11 +39,22 @@ class GetPickedPostImageErrorState extends SocialState{}
 
 class RemovingPostImageState extends SocialState{}
 
+class GetLikesNumberSuccess extends SocialState{}
+class GetLikesNumberError extends SocialState{
+  final String error;
 
+  GetLikesNumberError(this.error);
+
+}
 
 class GetPostsLoadingState extends SocialState{}
 class GetPostsSuccessState extends SocialState{}
 class FillingPostModelSuccessState extends SocialState{}
+class FillingPostModelErrorState extends SocialState{
+  final String error;
+  FillingPostModelErrorState(this.error);
+}
+
 class GetPostsErrorState extends SocialState{
   final String error;
   GetPostsErrorState(this.error);
@@ -62,15 +73,19 @@ class PostLikeErrorState extends SocialState{
   PostLikeErrorState(this.error);
 }
 
-
-class PostCommentNumbersSuccessState extends SocialState{}
-class PostCommentNumbersErrorState extends SocialState{
+class FillPostCommentNumbersSuccessState extends SocialState{}
+class FillPostCommentNumbersErrorState extends SocialState{
   final String error;
-  PostCommentNumbersErrorState(this.error);
+  FillPostCommentNumbersErrorState(this.error);
+}
+
+class GetCommentsNumberSuccessState extends SocialState{}
+class GetCommentsNumberErrorState extends SocialState{
+  final String error;
+  GetCommentsNumberErrorState(this.error);
 }
 
 
-class PostCommentSuccessState extends SocialState{}
 class PostCommentErrorState extends SocialState{
   final String error;
   PostCommentErrorState(this.error);
@@ -86,3 +101,12 @@ class CreateCommentErrorState extends SocialState{
 
   CreateCommentErrorState(this.error);
 }
+
+
+class SendMessageSuccess extends SocialState{}
+class SendMessageError extends SocialState{
+  final String error;
+
+  SendMessageError(this.error);
+}
+class GetMessageSuccess extends SocialState{}
