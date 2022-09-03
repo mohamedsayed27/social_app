@@ -200,6 +200,7 @@ class SocialCubit extends Cubit<SocialState> {
   void uploadPostImage({
     required String text,
     required String dateTime,
+    required BuildContext context
   }) async {
     emit(CreatePostLoadingState());
     TaskSnapshot snap = await FirebaseStorage.instance
@@ -208,7 +209,7 @@ class SocialCubit extends Cubit<SocialState> {
         .putFile(postImage!);
     try {
       String imageUrl = await snap.ref.getDownloadURL();
-      createPost(text: text, dateTime: dateTime, postImage: imageUrl);
+      createPost(text: text, dateTime: dateTime, postImage: imageUrl, context: context);
       emit(CreatePostSuccessState());
     } catch (e) {
       emit(CreatePostErrorState(e.toString()));
@@ -219,6 +220,7 @@ class SocialCubit extends Cubit<SocialState> {
     required String text,
     required String dateTime,
     String? postImage,
+    required BuildContext context
   }) {
     emit(CreatePostLoadingState());
     CreatePostModel model = CreatePostModel(
@@ -233,6 +235,7 @@ class SocialCubit extends Cubit<SocialState> {
         .add(model.toMap())
         .then((value) {
       emit(CreatePostSuccessState());
+      Navigator.of(context).pop();
     }).catchError((error) {
       emit(UpdateUserDataErrorState());
     });
@@ -269,7 +272,17 @@ class SocialCubit extends Cubit<SocialState> {
         } catch (error) {
           emit(GetCommentsNumberErrorState(error.toString()));
         }
-      }
+        try{
+          for (var element in commentSnap.docs) {
+            comments.add(CommentModel.fromJson(element.data()));
+            print(comments.length);
+            print(comments[0].comment);
+          }
+          emit(GetCommentsDataSuccessState());
+        }catch(error){
+          emit(GetCommentsDataErrorState(error.toString()));
+        }
+        }
     });
   }
 

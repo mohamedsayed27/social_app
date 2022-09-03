@@ -30,9 +30,9 @@ class AddPostScreen extends StatelessWidget {
                   TextButton(
                       onPressed: () {
                         if(cubit.postImage == null){
-                          cubit.createPost(text: textController.text, dateTime: now.toString());
+                          cubit.createPost(text: textController.text, dateTime: now.toString(), context: context);
                         }else{
-                          cubit.uploadPostImage(text: textController.text, dateTime: now.toString());
+                          cubit.uploadPostImage(text: textController.text, dateTime: now.toString(), context: context);
                         }
                         textController.text = '';
                         SocialCubit.get(context).removePostImage();
@@ -53,17 +53,17 @@ class AddPostScreen extends StatelessWidget {
                     const SizedBox(height: 10,),
                   Row(
                     children: [
-                      const CircleAvatar(
-                        backgroundImage: NetworkImage('https://as1.ftcdn.net/v2/jpg/03/02/78/26/1000_F_302782694_VftvTDVoDT6kYW3lXTqvp8bmH3inmpT8.jpg'),
+                       CircleAvatar(
+                        backgroundImage: NetworkImage(cubit.socialUserModel!.image!),
                         radius: 27,
                       ),
                       SizedBox(width: 10,),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text('Anyone Here',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.bold,height: 1.3)),
-                            Text('27 May 2022',style: TextStyle(fontSize: 12,color: Colors.grey,height: 1.3))
+                          children: [
+                            Text(cubit.socialUserModel!.name!,style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.bold,height: 1.3)),
+                            Text(DateTime.now().toString(),style: TextStyle(fontSize: 12,color: Colors.grey,height: 1.3))
                           ],
                         ),
                       ),
