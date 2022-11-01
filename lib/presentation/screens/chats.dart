@@ -19,7 +19,7 @@ class ChatsScreen extends StatelessWidget {
           return ConditionalBuilder(
               condition: usersList.isNotEmpty,
               builder: (context) => ListView.separated(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context , index) => buildChatItem(usersList[index],context),
                   separatorBuilder: (context , index) =>Container(height: 1,color: Colors.black,),
                   itemCount: usersList.length),
@@ -41,7 +41,7 @@ class ChatsScreen extends StatelessWidget {
               backgroundImage: NetworkImage('${model.image}'),
               radius: 27,
             ),
-            SizedBox(width: 15,),
+            const SizedBox(width: 15,),
             Text('${model.name}'),
           ],
         ),
